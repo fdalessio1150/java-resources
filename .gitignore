@@ -1,0 +1,9 @@
+/.metadata/
+/bin/
+/.recommenders/
+/RemoteSystemsTempFiles/
+/doc/
+/.gradle/
+/build/
+.classpath
+/.settings/
