@@ -1,0 +1,86 @@
+
+Criar keyspace:
+create keyspace BD001 with replication={'class':'SimpleStrategy', 'replication_factor':1};
+
+Criar tabela:
+CREATE TABLE BD001.TB002_PROD (
+PROD_ID text,
+PROD_NOME text,
+PROD_CATEG text,
+PROD_DESCR text,
+PROD_DATA text,
+PROD_VALOR decimal,
+PRIMARY KEY ((PROD_CATEG),PROD_NOME, PROD_ID));
+
+Criar novo projeto:
+gradle init --type java-application
+
+Configurar o build.gradle:
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+    cassandraVersion = '3.5.0'
+    jsonVersion = '2.9.5'
+}
+
+repositories {
+    maven {
+        url 'http://repo.spring.io/milestone'
+    }
+    mavenCentral()
+}
+
+dependencies {
+	// Json
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jsonVersion}")
+
+	// Spring Boot
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+	// Cassandra
+    compile("com.datastax.cassandra:cassandra-driver-core:${cassandraVersion}")
+    compile("com.datastax.cassandra:cassandra-driver-mapping:${cassandraVersion}")
+    
+    // Util
+	compile 'joda-time:joda-time:2.10'
+	compile 'io.netty:netty-all:4.1.25.Final'
+		
+	// Test
+    testCompile 'junit:junit:4.12'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+Para executar passar por parametro:
+-Dspring.config.location=C:\Users\Felipe\Cursos\resources\demo\application.properties
+
+
+Inserir dados na tabela:
+INSERT INTO BD001.TB002_PROD (PROD_ID, PROD_NOME, PROD_CATEG, PROD_DESCR, PROD_DATA, PROD_VALOR) 
+VALUES ('0001', 'CAMISA', 'ROUPA', '-', '2018-09-26', 120.50);
+INSERT INTO BD001.TB002_PROD (PROD_ID, PROD_NOME, PROD_CATEG, PROD_DESCR, PROD_DATA, PROD_VALOR) 
+VALUES ('0002', 'JEANS', 'ROUPA', '-', '2018-09-26', 200.34);
+
+Executar comando:
+curl -kvX GET "http://localhost:8081/products"
+http://localhost:8081/products
+http://localhost:8081/products?category=ROUPA&name=CAMISA
+
+
+
+
