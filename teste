@@ -1,0 +1,55 @@
+1) Felipe iniciou fluxo na nova plataforma
+
+Fluxo Nova Plataforma - Buscar dados:
+	buscar dados EQ3, Felipe existe?
+	não:
+		buscar dados no MDM, Felipe Existe?
+		sim:
+			retornar dados para a pessoa;
+		não:
+			novo cliente; -> fluxo novo cliente;
+	sim:
+		retornar dados para a pessoa;
+
+
+Problemas:
+N/A
+
+Premissas:
+* Para este fluxo o customer-view deve possui capacidade para chavear a chamada.
+
+
+2) Felipe está sendo criado na nova plataforma apesar de já possuir cadastro no conta-corrente
+
+Fluxo Nova Plataforma - Criar pessoa:
+	salvar dados EQ3
+	dados enviados possui formalização de completude?
+	sim:
+		enviar dados para o MDM via fluxo conhecido AG8, etc
+	não:
+		encerrar processamento de cadastro
+
+Problemas:
+* Podemos ter duas visões caso não possuir formalização da completude - EQ3 x MDM
+
+Premissas:
+* N/A
+
+
+
+2) Felipe está utilizando a nova plataforma e resolveu atualizar as informações cadastrais únicas
+
+Fluxo Nova Plataforma - Atualização de Dados:
+	...
+	pessoa envia a data de nascimento atualizada para sistema EQ3
+	EQ3 deve verificar se o dado enviado está formalizado
+	sim:
+		devemos iniciar o fluxo de atualização do cadastro legado
+	não:
+		sistema EQ3 encerra processamento
+		
+	
+	
+
+Premissas:
+Pessoa já existe seja MDM ou EQ3.
